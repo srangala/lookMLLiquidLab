@@ -108,7 +108,11 @@ view: users {
     type: zipcode
     sql: ${TABLE}.zip ;;
   }
-
+  dimension: order_history_button {
+    label: "Order History"
+    sql: ${TABLE}.id ;;
+    html: <a href="/explore/liquidlab_srangala/order_items?fields=order_items.id,users.first_name,users.last_name,users.id,order_items.count,order_items.total_sale_price&f[users.id]={{ value }}"><button>Order History</button></a> ;;
+  }
   measure: count {
     type: count
     drill_fields: [id, first_name, last_name, orders.count]
