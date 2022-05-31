@@ -41,6 +41,16 @@ view: users {
     sql: ${TABLE}.city ;;
   }
 
+  dimension: city_link {
+    type: string
+    sql: ${TABLE}.city ;;
+    link: {
+      label: "Search the web"
+      url: "http://www.google.com/search?q={{ value | url_encode }}"
+      icon_url: "http://www.google.com/s2/favicons?domain=www.{{ value | url_encode }}.com"
+    }
+  }
+
   dimension: country {
     type: string
     map_layer_name: countries
