@@ -81,4 +81,15 @@ view: order_items {
     type: count
     drill_fields: [id, orders.id, inventory_items.id]
   }
+
+# ----- Sets of fields for drilling ------
+  set: detail {
+    fields: [
+      id,
+      users.last_name,
+      users.id,
+      users.first_name,
+      inventory_items.id
+    ]
+  }
 }

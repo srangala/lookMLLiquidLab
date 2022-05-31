@@ -99,6 +99,17 @@ view: users {
     sql: ${TABLE}.state ;;
   }
 
+  dimension: state_link {
+    type: string
+    sql: ${TABLE}.state ;;
+    map_layer_name: us_states
+    html: {% if _explore._name == "order_items" %}
+          <a href="/explore/liquidlab_srangala/order_items?fields=order_items.detail*&f[users.state]= {{ value }}">{{ value }}</a>
+        {% else %}
+          <a href="/explore/liquidlab_srangala/users?fields=users.detail*&f[users.state]={{ value }}">{{ value }}</a>
+        {% endif %} ;;
+  }
+
   dimension: traffic_source {
     type: string
     sql: ${TABLE}.traffic_source ;;
@@ -116,5 +127,20 @@ view: users {
   measure: count {
     type: count
     drill_fields: [id, first_name, last_name, orders.count]
+  }
+
+# ----- Sets of fields for drilling ------
+  set: detail {
+    fields: [
+      id,
+      first_name,
+      last_name,
+      age,
+      email,
+      gender,
+      city,
+      state
+
+    ]
   }
 }
