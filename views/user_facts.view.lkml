@@ -19,7 +19,14 @@ view: user_facts {
     type: count
     drill_fields: [detail*]
   }
-
+  measure: average_lifetime_revenue {
+    type: average
+    sql: ${TABLE}.lifetime_revenue ;;
+  }
+  measure: average_lifetime_order_count {
+    type: average
+    sql: ${TABLE}.lifetime_order_count ;;
+  }
   dimension: user_id {
     type: number
     primary_key: yes
