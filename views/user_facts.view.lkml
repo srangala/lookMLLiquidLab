@@ -9,11 +9,16 @@ view: user_facts {
       FROM
           "public"."order_items" AS "order_items"
           LEFT JOIN "public"."orders" AS "orders" ON "order_items"."order_id" = "orders"."id"
+          WHERE {% condition select_date %} orders.created_at {% endcondition %}
       GROUP BY
           1
        ;;
   }
-
+  filter: select_date {
+    type: date
+    suggest_explore: orders
+    suggest_dimension: orders.created_date
+  }
   measure: count {
     hidden: yes
     type: count
