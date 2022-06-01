@@ -4,21 +4,24 @@
 view: brand_order_facts {
   derived_table: {
     explore_source: order_items {
-      column: product_id { field:products.id }
       column: brand { field: products.brand }
       column: total_sale_price {}
       derived_column: brand_rank {sql: row_number() over (order by total_sale_price desc) ;;}
+      #bind_filters: {
+      #  from_field: orders.created_date
+      #  to_field: orders.created_date
+      #}
+      bind_all_filters: yes
     }
-  }
-  dimension: product_id {
-    type:  number
-    hidden: yes
   }
   dimension: brand_rank {
     type: number
     hidden: yes
   }
-  dimension: brand {}
+  dimension: brand {
+    primary_key: yes
+  }
+
   dimension: total_sale_price {
     type: number
     value_format_name: usd

@@ -22,19 +22,14 @@ persist_with: liquidlab_srangala_default_datagroup
 # To see the Explore you’re building, navigate to the Explore menu and select an Explore under "Liquidlab Srangala"
 
 explore: inventory_items {
-  description: "Start here for inventory products"
-  fields: [ALL_FIELDS*]
-  from: inventory_items
-  view_name: inventory_items
-  extends: [base_inventory_product]
+  join: products {
+    type: left_outer
+    sql_on: ${inventory_items.product_id} = ${products.id} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: order_items {
-  description: "Start here for order items"
-  fields: [ALL_FIELDS*]
-  from: order_items
-  view_name: order_items
-  extends: [base_inventory_product]
   join: orders {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.id} ;;
@@ -55,6 +50,17 @@ explore: order_items {
   join: user_facts {
     type: left_outer
     sql_on: ${orders.user_id} = ${user_facts.user_id} ;;
+    relationship: many_to_one
+  }
+
+  join: products {
+    type: left_outer
+    sql_on: ${inventory_items.product_id} = ${products.id} ;;
+    relationship: many_to_one
+  }
+  join: brand_order_facts {
+    type: left_outer
+    sql_on: ${products.brand} = ${brand_order_facts.brand};;
     relationship: many_to_one
   }
 }
@@ -87,26 +93,9 @@ extension: required
     sql_on: ${product_facts.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
-  join: brand_order_facts {
-    type: left_outer
-    sql_on: ${product_facts.product_id} = ${brand_order_facts.product_id} ;;
-    relationship: many_to_one
-  }
 }
 
-explore: base_inventory_product {
-  extension: required
-  join: products {
-    type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
-    relationship: many_to_one
-  }
-  join: brand_order_facts {
-    type: left_outer
-    sql_on: ${inventory_items.product_id} = ${brand_order_facts.product_id} ;;
-    relationship: many_to_one
-  }
-}
+
 # To create more sophisticated Explores that involve multiple views, you can use the join parameter.
 # Typically, join parameters require that you define the join type, join relationship, and a sql_on clause.
 # Each joined view also needs to define a primary key.
