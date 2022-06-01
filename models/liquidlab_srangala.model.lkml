@@ -27,6 +27,11 @@ explore: inventory_items {
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
+  join: brand_order_facts {
+    type: left_outer
+    sql_on: ${inventory_items.product_id} = ${brand_order_facts.product_id} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: order_items {
@@ -57,6 +62,11 @@ explore: order_items {
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
+  join: brand_order_facts {
+    type: left_outer
+    sql_on: ${inventory_items.product_id} = ${brand_order_facts.product_id} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: orders {
@@ -76,6 +86,11 @@ explore: product_facts {
   join: products {
     type: left_outer
     sql_on: ${product_facts.product_id} = ${products.id} ;;
+    relationship: many_to_one
+  }
+  join: brand_order_facts {
+    type: left_outer
+    sql_on: ${product_facts.product_id} = ${brand_order_facts.product_id} ;;
     relationship: many_to_one
   }
 }
