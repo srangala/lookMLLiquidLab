@@ -9,7 +9,7 @@ include: "/views/**/*.view"
 
 datagroup: liquidlab_srangala_default_datagroup {
   #everyday at 6am
-  sql_trigger: SELECT FLOOR(((TIMESTAMP_DIFF(CURRENT_TIMESTAMP(),'1970-01-01 00:00:00',SECOND)) - 60*60*6)/(60*60*24));;
+  sql_trigger: SELECT FLOOR((EXTRACT(epoch from GETDATE()) - 60*60*6)/(60*60*24));;
   max_cache_age: "1 hour"
 }
 
